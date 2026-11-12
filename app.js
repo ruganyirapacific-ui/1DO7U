@@ -5,7 +5,7 @@ const API_URL =
   location.hostname === 'localhost' ||
   location.hostname === '127.0.0.1'
     ? ''
-    : 'https://onedo7u-backen.onrender.com';
+    : 'https://onedo7u-backen-1.onrender.com';
 
 fetch(`${API_URL}/api/public`).then(r=>r.json()).then(d=>{
  $('#statMembers').textContent=d.stats.members;$('#statNews').textContent=d.stats.activities;$('#statMeetings').textContent=d.stats.meetings;
