@@ -1,6 +1,25 @@
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function api(path,opt={}){const r=await fetch(path,{...opt,credentials:'same-origin',headers:{'Content-Type':'application/json',...(opt.headers||{})}});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'Erreur serveur');return d}
+const API_URL = 'https://onedo7u-backen-1.onrender.com';
+
+async function api(path, opt = {}) {
+    const r = await fetch(`${API_URL}${path}`, {
+        ...opt,
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            ...(opt.headers || {})
+        }
+    });
+
+    const d = await r.json().catch(() => ({}));
+
+    if (!r.ok) {
+        throw Error(d.error || 'Erreur serveur');
+    }
+
+    return d;
+}
 const fd=f=>Object.fromEntries(new FormData(f).entries());
 function toast(t){const e=$('#adminToast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),3200)}
 async function start(){const c=await api('/api/admin/check');if(c.authenticated)show();else{$('#adminLogin').classList.remove('hidden');$('#adminDashboard').classList.add('hidden')}}
